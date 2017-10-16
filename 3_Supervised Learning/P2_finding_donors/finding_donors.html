@@ -13248,12 +13248,14 @@ It is a ratio of true positives(words classified as spam, and which are actually
 <li>a good candidate: Since the number of features are not huge and there may be a clear margin of seperation SVM can be applied to the current data.</li>
 </ul>
 </li>
-<li><p>Ensemble Methods:</p>
+<li><p>Ensemble Method(Gradient Boosting)s:</p>
 <ul>
-<li>application: This can be used in oil and gas industry where a company should decide if it is worth drilling on a test sight or not. </li>
-<li>stength: Easy to use and grow. Can be good to interpret graphically. With ensemble methods, these can be used to build large classifies. Also ensemble methods can be used for imbalanced data sets.</li>
-<li>weakness: For ensembler methods, these are not robust against outliers and noise.Need to find proper stopping point and has several hyper-parameters for tuning.</li>
-<li>a good candidate: Since the current data set seem to be imbalanced i.e. there are more examples belonging to a specific class than the other class, ensemble methods i.e. Gradient Boosted trees can be used.</li>
+<li>application: Gradient boosting can be used in the field of learning to rank. The commercial web search engines Yahoo[and Yandex use variants of gradient boosting in their machine-learned ranking engines</li>
+<li><p>stength: Gradient boosting is typically used with decision trees (especially CART trees) of a fixed size as base learners. Can be good to interpret graphically. Recall that, in Adaboost,“shortcomings” are identified by high-weight data points, In Gradient Boosting,“shortcomings” are identified by gradients.Both high-weight data points and gradients tell us how to improve our model.<a href="http://www.ccs.neu.edu/home/vip/teach/MLcourse/4_boosting/slides/gradient_boosting.pdf">Ref1_A Gentle Introduction to Gradient Boosting</a>,<a href="https://en.wikipedia.org/wiki/Gradient_boosting">Ref2_wikipedia </a></p>
+</li>
+<li><p>weakness: One cannot just take maximum value of ntree in this case as GBM can overfit fit higher number of trees.Need to find proper stopping point and has several hyper-parameters for tuning.</p>
+</li>
+<li>a good candidate: Since the current data set seem to be imbalanced i.e. Gradient Boosted trees can be used.Gradient boost can overcome diificulty in classification due to outliers</li>
 </ul>
 </li>
 </ol>
@@ -14234,9 +14236,12 @@ GradientBoosting classifier Ensemble Method seems to be most appropriate for the
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer: </strong> GradientBoosting classifier Ensemble Method is a types of Tree model.</p>
 <ul>
-<li>A Tree model is, in layman’s terms, like the Twenty Questions guessing game.</li>
-<li>when a Tree ML is trained on the data set, the algorithm tries to come up with a set of “questions” that are ‘optimal”. Unfortunately, there is no perfect solution. So, there are different strategies to try to build the Tree ML.</li>
-<li>When we receive a new donor, the new donor is parsed through all set of questions and based on the answers will arrive at the final step and final prediction.</li>
+<li>Gradient boosting combines several simple prediction models to create an "ensemble" of models that can make more accurate predictions.
+In our case, the model is trained with existing census data (e.g., age, gender, etc), and uses that data to find rules that separate those with income above or below 50K.</li>
+<li>During successive rounds of training, new rules (i.e., decision trees) are learned that essentially create a flowchart of yes/no questions that separate those with income above or below 50K.</li>
+<li>With each round, the model looks at where a learned tree predicted poorly and tries to correct the mistakes it made in the previous rounds.</li>
+<li>The trees are then combined to create the final model, where the trees that do a better job of classifying are factored in more heavily. 
+Using this model trained with data of known individuals, the model can look at new unknown individuals and predict whether they earn more thant 50K or not.</li>
 </ul>
 
 </div>
