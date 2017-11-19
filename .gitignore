@@ -19,3 +19,5 @@ events.*
 *.zip
 *.jpg
 *.txt
+*-checkpoint.ipynb
+*.html
