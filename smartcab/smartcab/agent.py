@@ -46,9 +46,10 @@ class LearningAgent(Agent):
         else:
         	# # question6: linear decay
         	# self.epsilon -= 0.05
-       		self.epsilon = math.exp(-self.alpha*self.t)
+       		#self.epsilon  = 0.998**self.t
+       		#self.epsilon = math.exp(-0.0015*self.t)
+       		self.epsilon = 1 - 5e-7*self.t**2
            	self.t += 1
-        	
         return None
 
     def build_state(self):
@@ -93,8 +94,11 @@ class LearningAgent(Agent):
         # When learning, check if the 'state' is not in the Q-table
         # If it is not, create a new dictionary for that state
         #   Then, for each action available, set the initial Q-value to 0.0
-        if self.learning and (state not in self.Q):
-        	self.Q[state] = {None:0.0, 'forward':0.0, 'left':0.0, 'right':0.0}
+
+        # if self.learning and (state not in self.Q):
+        # 	self.Q[state] = {None:0.0, 'forward':0.0, 'left':0.0, 'right':0.0}
+        if self.learning:
+        	self.Q.setdefault(state, {None:0.0, 'forward':0.0, 'left':0.0, 'right':0.0})
         return
 
 
@@ -136,7 +140,7 @@ class LearningAgent(Agent):
         # When learning, implement the value iteration update rule
         #   Use only the learning rate 'alpha' (do not use the discount factor 'gamma')
         if self.learning:
-        	self.Q[state][action] = self.Q[state][action] + self.alpha*(reward-self.Q[state][action])
+        	self.Q[state][action] = (1 - self.alpha)*self.Q[state][action] + self.alpha*reward
         return
 
 
@@ -172,7 +176,7 @@ def run():
     #   learning   - set to True to force the driving agent to use Q-learning
     #    * epsilon - continuous value for the exploration factor, default is 1
     #    * alpha   - continuous value for the learning rate, default is 0.5
-    agent = env.create_agent(LearningAgent, learning = True, epsilon=1, alpha=0.002)
+    agent = env.create_agent(LearningAgent, learning = True, epsilon=1, alpha=0.5)
     
     ##############
     # Follow the driving agent
@@ -194,7 +198,7 @@ def run():
     # Flags:
     #   tolerance  - epsilon tolerance before beginning testing, default is 0.05 
     #   n_test     - discrete number of testing trials to perform, default is 0
-    sim.run(n_test=100, tolerance=0.01)
+    sim.run(n_test=100, tolerance=0.05)
 
 
 if __name__ == '__main__':
